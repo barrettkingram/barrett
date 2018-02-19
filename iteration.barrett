@@ -1,0 +1,47 @@
+var
+    X, Y, Z, I;
+
+begin
+    X := 1;
+
+    { Loop to print odd numbers between 1 and 99 }
+    while (X < 100) do
+    begin
+        WriteLn(X);
+        X := X + 2;
+    end;
+    WriteLn;
+
+
+    { Iterative Fibonacci - up to 20th number}
+    X := 0;
+    Y := 1;
+    Z := 1;
+
+    I := 0;
+    while (I < 20) do
+    begin
+        X := Y;
+        Y := Z;
+        Z := X + Y;
+        I := I + 1;
+    end;
+    WriteLn(X);
+    WriteLn;
+
+
+    { Nested loops }
+    X := 0;
+    while (X < 10) do
+    begin
+        Y := 0;
+        while (Y < 10) do
+        begin
+            WriteLn(X, Y);
+            Y := Y + 1;
+        end;
+        X := X + 1;
+    end;
+
+
+end;

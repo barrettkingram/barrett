@@ -1,0 +1,17 @@
+var
+    X, Y, Z;
+
+function DoSomething(A, B, C);
+    var
+        Z;
+    begin
+        Z := A + B + C;
+        WriteLn(Q); { This Q hasn't been defined anywhere }
+    end;
+
+begin
+    X := 1;
+    Y := 2;
+    Z := 3;
+    DoSomething(X, Y, Z);
+end;

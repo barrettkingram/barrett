@@ -1,0 +1,73 @@
+program: functionBlock
+
+functionBlock: optVarDefs optFuncDefs block SEMI
+
+optVarDefs: VAR variables SEMI
+          | EMPTY
+
+variables: variable
+         | variable COMMA variables
+
+variable: ID
+        | ID OBRACK NUMBER PERIOD PERIOD NUMBER CBRACK
+
+optFuncDefs: funcDef optFuncDefs
+           | EMPTY
+
+funcDef: FUNCTION ID optParamList SEMI functionBlock
+
+optParamList: EMPTY
+            | OPAREN paramList CPAREN
+
+paramList: ID
+         | ID COMMA paramList
+
+optArgList: EMPTY
+          | OPAREN argList CPAREN
+
+argList: expression
+       | expression COMMA argList
+
+block: BEGIN statements END
+
+statements: statement
+          | statement statements
+
+statement: expression SEMI
+         | ifStatement
+         | whileLoop
+
+expression: unary
+          | unary operator expression
+
+operator: PLUS
+        | TIMES
+        | MINUS
+        | DIVBY
+        | MOD
+        | ASSIGN
+        | EQUALS
+        | LESSTHAN
+        | GREATERTHAN
+        | NOTEQUALS
+
+unary: NUMBER
+     | STRING
+     | OPAREN expression CPAREN
+     | MINUS unary
+     | AT ID
+     | LAMBDA optParamList SEMI functionBlock
+     | ID optArgList
+     | ID OBRACK expression CBRACK
+     | TRUE
+     | FALSE
+
+varDef: VAR ID SEMI
+
+ifStatement: IF expression THEN block optElse
+
+optElse: ELSE block SEMI
+       | ELSE ifStatement
+       | SEMI
+
+whileLoop: WHILE expression DO block SEMI

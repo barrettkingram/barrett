@@ -1,0 +1,69 @@
+var
+    X, Y, Z;
+
+begin
+    X := 1;
+    Y := 2;
+    Z := 3;
+
+
+    { Should print "X is 1" }
+    if X = 1 then
+    begin
+        WriteLn("X is 1");
+    end;
+
+
+    { Shouldn't print anything }
+    if Y = 1 then
+    begin
+        WriteLn("Y is 1");
+    end;
+
+
+    { Should print "Z is 3" }
+    if Z = 1 then
+    begin
+        WriteLn("Z is 1");
+    end
+    else if Z = 2 then
+    begin
+        WriteLn("Z is 2");
+    end
+    else if Z = 3 then
+    begin
+        WriteLn("Z is 3");
+    end;
+
+
+    { Should print "X, Y, Z is 1, 2, 3 respectively" }
+    if X = 1 then
+    begin
+        if Y = 2 then
+        begin
+            if Z = 3 then
+            begin
+                WriteLn("X, Y, Z is 1, 2, 3 respectively");
+            end;
+        end;
+    end;
+
+
+    { Should print "Z is not 3" }
+    Z := 2;
+    if X = 1 then
+    begin
+        if Y = 2 then
+        begin
+            if Z = 3 then
+            begin
+                WriteLn("X, Y, Z is 1, 2, 3 respectively");
+            end
+            else
+            begin
+                WriteLn("Z is not 3");
+            end;
+        end;
+    end;
+
+end;

@@ -1,0 +1,3 @@
+begin
+    WriteLn(11%6);
+end;

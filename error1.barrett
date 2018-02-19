@@ -1,0 +1,13 @@
+var
+    X, Y, Z;
+
+begin
+    X := 1;
+    Y := 2;
+    Z := 3;
+    while Z < 5 do
+    begin
+        WriteLn("Oops, I forgot a semicolon", Z)
+        Z := Z + 1;
+    end;
+end;

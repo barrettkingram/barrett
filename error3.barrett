@@ -1,0 +1,18 @@
+var
+    X, Y, Z;
+
+function DoSomething(A B, C);
+    var
+        Z;
+    begin
+        WriteLn("This function definition is missing a comma separator in the parameter list!");
+        Z := A + B + C;
+        WriteLn(Z);
+    end;
+
+begin
+    X := 1;
+    Y := 2;
+    Z := 3;
+    DoSomething(X, Y, Z);
+end;

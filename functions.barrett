@@ -1,0 +1,56 @@
+var
+    X, Y;
+function ExecuteFunction(f, param);
+    begin
+        f(param);
+    end;
+
+function Print(a);
+    begin
+        WriteLn(a);
+    end;
+
+function AddFive(x);
+    begin
+        WriteLn(x + 5);
+    end;
+
+function GetFunction(num);
+    function PrintHello;
+        begin
+            WriteLn("Hello");
+        end;
+
+    function PrintGoodbye;
+        begin
+            WriteLn("Goodbye");
+        end;
+
+    begin
+        if num = 1 then
+        begin
+            Result := @PrintHello;
+        end
+        else
+        begin
+            Result := @PrintGoodbye;
+        end;
+    end;
+
+
+begin
+    { Pass a function to another function }
+    { '@' is placed in front of function name to pass without evaluating }
+    ExecuteFunction(@Print, "Hello World");
+    ExecuteFunction(@AddFive, 3);
+
+    { Functions can be returned as well }
+    X := 1;
+    Y := GetFunction(X); { Should return a function that prints "Hello" }
+    Y; { Executes the function returned by GetFunction }
+
+    X := 2;
+    Y := GetFunction(X); { Should return a function that prints "Goodbye" }
+    Y; { Executes the function returned by GetFunction }
+
+end;

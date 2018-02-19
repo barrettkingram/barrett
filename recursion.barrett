@@ -1,0 +1,39 @@
+var
+    X, Y, Z;
+
+function RecursionFunc(X);
+    begin
+        if X = 0 then
+        begin
+            WriteLn("Done");
+        end
+        else
+        begin
+            WriteLn("X is ", X);
+            X := X - 1;
+            RecursionFunc(X);
+        end;
+    end;
+
+function Fibonacci(N);
+    begin
+        if N = 0 then
+        begin
+            Result := 0;
+        end
+        else if N = 1 then
+        begin
+            Result := 1;
+        end
+        else
+        begin
+            Result := Fibonacci(N-1) + Fibonacci(N-2);
+        end;
+    end;
+
+begin
+    X := 10;
+    RecursionFunc(X);
+    WriteLn;
+    WriteLn(Fibonacci(10));
+end;

@@ -1,0 +1,92 @@
+{ Sieve of Eratosthenes without assignment.
+* Note: Assignment is used only in Cons function and to return values from functions
+* since barrett returns values by assigning to the special variable 'Result'
+}
+
+function Cons(A, B);
+    var
+        ConsCell[0..1];
+    begin
+        ConsCell[0] := A;
+        ConsCell[1] := @B;
+        Result := ConsCell;
+    end;
+
+function ConsStream(A, B);
+    begin
+        Result := Cons(A, @B);
+    end;
+
+function StreamCar(Stream);
+    begin
+        Result := Stream[0];
+    end;
+
+function StreamCdr(Stream);
+    begin
+        Result := Stream[1];
+    end;
+
+function DisplayStream(S, N);
+    begin
+        if N > 0 then
+        begin
+            WriteLn(StreamCar(S));
+            DisplayStream(StreamCdr(S), N-1);
+        end;
+    end;
+
+function StreamFilter(Pred, Stream);
+    begin
+        if Pred(StreamCar(Stream)) then
+        begin
+            Result := ConsStream(StreamCar(Stream),
+                lambda;
+                begin
+                    Result := StreamFilter(@Pred, StreamCdr(Stream));
+                end;
+                );
+        end
+        else
+        begin
+            Result := StreamFilter(@Pred, StreamCdr(Stream));
+        end;
+    end;
+
+function IntegersStartingFrom(N);
+    var
+        ConsCell[0..1];
+    begin
+        Result := ConsStream(N,
+            lambda;
+            begin
+                Result := IntegersStartingFrom(N+1);
+            end;
+            );
+    end;
+
+function IsNotDivisible(X, Y);
+    begin
+        Result := (X % Y) <> 0;
+    end;
+
+function Sieve(S);
+    begin
+        Result := ConsStream(StreamCar(S),
+            lambda;
+            begin
+                Result := Sieve(StreamFilter(
+                    lambda(x);
+                    begin
+                        Result := IsNotDivisible(x, StreamCar(S));
+                    end;
+                    , StreamCdr(S)));
+            end;
+            );
+    end;
+
+begin
+    DisplayStream(Sieve(IntegersStartingFrom(2)), 12);
+end;
+
+

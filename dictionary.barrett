@@ -1,0 +1,193 @@
+{ AVL Tree in barrett based on AVL tree in C found here:
+  http://www.zentut.com/c-tutorial/c-avl-tree/ }
+var
+    Key, Value, Left, Right, Parent, Height, WordCounts;
+
+function MakeDictionary;
+    begin
+        Result := "Null";
+    end;
+
+function MakeNode(k, v, l, r, p, h);
+    var
+        Node[0..5];
+    begin
+        Node[Key] := k; Node[Value] := v; Node[Left] := l;
+        Node[Right] := r; Node[Parent] := p; Node[Height] := h;
+        Result := Node;
+    end;
+
+function GetHeight(n);
+    begin
+        if n = "Null" then
+        begin
+            Result := -1;
+        end
+        else
+        begin
+            Result := n[Height];
+        end;
+    end;
+
+function Max(x, y);
+    begin
+        if x > y then
+        begin
+            Result := x;
+        end
+        else
+        begin
+            Result := y;
+        end;
+    end;
+
+function SingleRotateLeft(n);
+    var
+        Root;
+    begin
+        Root := n[Left];
+        n[Left] := Root[Right];
+        Root[Right] := n;
+
+        n[Height] := Max(GetHeight(n[Left]), GetHeight(n[Right])) + 1;
+        Root[Height] := Max(GetHeight(Root[Left]), n[Height]) + 1;
+        Result := Root;
+    end;
+
+function SingleRotateRight(n);
+    var
+        Root;
+    begin
+        Root := n[Right];
+        n[Right] := Root[Left];
+        Root[Left] := n;
+
+        n[Height] := Max(GetHeight(n[Left]), GetHeight(n[Right])) + 1;
+        Root[Height] := Max(GetHeight(Root[Right]), n[Height]) + 1;
+        Result := Root;
+    end;
+
+function DoubleRotateLeft(n);
+    begin
+        n[Left] := SingleRotateRight(n[Left]);
+        Result := SingleRotateLeft(n);
+    end;
+
+function DoubleRotateRight(n);
+    begin
+        n[Right] := SingleRotateLeft(n[Right]);
+        Result := SingleRotateRight(n);
+    end;
+
+
+function Insert(d, k, v);
+    var
+        L, R, Tree;
+    begin
+        if d = "Null" then
+        begin
+            d := MakeNode(k,v,"Null","Null","Null",1);
+        end
+        else if k < d[Key] then
+        begin
+            d[Left] := Insert(d[Left], k, v);
+            if (GetHeight(d[Left]) - GetHeight(d[Right])) = 2 then
+            begin
+                L := d[Left];
+                if k < L[Key] then
+                begin
+                    d := SingleRotateLeft(d);
+                end
+                else
+                begin
+                    d := DoubleRotateLeft(d);
+                end;
+            end;
+        end
+        else if k > d[Key] then
+        begin
+            d[Right] := Insert(d[Right], k, v);
+            if (GetHeight(d[Right]) - GetHeight(d[Left])) = 2 then
+            begin
+                R := d[Right];
+                if k > R[Key] then
+                begin
+                    d := SingleRotateRight(d);
+                end
+                else
+                begin
+                    d := DoubleRotateRight(d);
+                end;
+            end;
+        end;
+        d[Height] := Max(GetHeight(d[Right]), GetHeight(d[Left])) + 1;
+        Result := d;
+    end;
+
+function GetValue(Tree, K);
+    begin
+        if Tree = "Null" then
+        begin
+            Result := "Value not found";
+        end;
+        if K < Tree[Key] then
+        begin
+            Result := GetValue(Tree[Left], K);
+        end
+        else if K > Tree[Key] then
+        begin
+            Result := GetValue(Tree[Right], K);
+        end
+        else
+        begin
+            Result := Tree[Value];
+        end;
+    end;
+
+function Display(Tree);
+    var
+        L, R;
+    begin
+        if Tree <> "Null" then
+        begin
+            Write(Tree[Key], " ", Tree[Height], " ");
+            L := Tree[Left];
+            R := Tree[Right];
+            if L <> "Null" then
+            begin
+                Write("(L:", L[Key], ")");
+            end;
+            if R <> "Null" then
+            begin
+                Write("(R:", R[Key], ")");
+            end;
+            WriteLn;
+
+            Display(L);
+            Display(R);
+        end;
+    end;
+
+begin
+    Key := 0; Value := 1; Left := 2; Right := 3; Parent := 4; Height := 5;
+    WordCounts := MakeDictionary;
+    WordCounts := Insert(WordCounts, "hello", "hola");
+    WordCounts := Insert(WordCounts, "we", "nosotros");
+    WordCounts := Insert(WordCounts, "read", "leo");
+    WordCounts := Insert(WordCounts, "write", "escriben");
+    WordCounts := Insert(WordCounts, "person", "persona");
+    WordCounts := Insert(WordCounts, "men", "hombres");
+    WordCounts := Insert(WordCounts, "the", "los");
+    WordCounts := Insert(WordCounts, "are", "somos");
+    WordCounts := Insert(WordCounts, "drink", "bebemos");
+    WordCounts := Insert(WordCounts, "they", "ellas");
+    WordCounts := Insert(WordCounts, "speak", "hablo");
+    WordCounts := Insert(WordCounts, "bread", "pan");
+    WordCounts := Insert(WordCounts, "vegetables", "vegetales");
+
+    WriteLn(GetValue(WordCounts, "drink")); { Prints "bebemos" }
+    WriteLn(GetValue(WordCounts, "bread")); { Prints "pan" }
+    WriteLn(GetValue(WordCounts, "speak")); { Prints "hablo" }
+    WriteLn;
+    Display(WordCounts); { Print the whole tree }
+end;

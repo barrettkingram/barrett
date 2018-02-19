@@ -1,0 +1,52 @@
+var
+    X, Y, Z;
+
+{ comment }
+function DoSomething;
+    var
+        A, B, C;
+    begin
+        A := 1;
+        B := 2;
+        C := 3;
+        if X = 3 then
+        begin
+            Y := X;
+            Z := Y;
+            if Z = 4 then
+            begin
+                Z := Z + 1;
+            end
+            else if X > 2 then
+            begin
+                Z := Z + 2;
+            end;
+        end
+        else
+        begin
+            X := Z;
+            Z := A;
+        end;
+    WriteLn(X);
+    WriteLn(Y);
+    WriteLn(Z);
+    WriteLn(A);
+    WriteLn(B);
+    WriteLn(C);
+    end;
+
+    { multiline
+    comment
+    }
+
+begin
+    X := 3;
+    DoSomething;
+    Z := 1;
+    while Z < 5 do
+    begin
+        WriteLn("Value of Z is ", Z);
+        Z := Z + 1;
+    end;
+end;
+

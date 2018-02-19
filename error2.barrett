@@ -1,0 +1,10 @@
+var
+    X, Y, Z;
+
+begin
+    X := 1;
+    Y := 2;
+    Z := 3;
+    if Z < 5 then
+        WriteLn("Oops, I forgot my begin/end keywords inside a conditional block", Z);
+end;

@@ -1,0 +1,59 @@
+var
+    X, F, S;
+
+function EvalFunc(func, param);
+    begin
+        func(param);
+    end;
+
+function GetFunc;
+    begin
+        Result :=
+            lambda(x);
+            begin
+                WriteLn(x * x);
+            end;
+            ;
+    end;
+
+function StringAppender(str);
+    begin
+    Result :=
+        lambda(x);
+        begin
+            WriteLn(x + str);
+        end;
+        ;
+    end;
+
+begin
+    { Assign a function to variable X before calling it }
+    X :=
+        lambda;
+        begin
+            WriteLn("Hello World");
+        end;
+        ;
+    X;
+
+    { Call EvalFunc using a lambda as the first argument
+        and the string "Hello World" as the second argument }
+    EvalFunc(
+        lambda(str);
+        begin
+            WriteLn(str);
+        end;
+        , "Hello World");
+
+    { Assign function returned by GetFunc to variable and call it }
+    F := GetFunc;
+    F(3);
+    F(5);
+
+    { Assign function with different parameters applied }
+    F := StringAppender(";");
+    S := StringAppender(".");
+    F("Hello"); { Prints "Hello;" }
+    S("Hello"); { Prints "Hello." }
+
+end;

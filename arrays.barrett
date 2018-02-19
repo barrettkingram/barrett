@@ -1,0 +1,39 @@
+var
+    a[0..20], i, b[1..5], c[0..3]; { Array declared with allowed range }
+
+function TestFunction(array);
+    begin
+        WriteLn(array[0]);
+    end;
+
+begin
+
+    { Simple array accesses }
+    a[0] := 4;
+    a[1] := 3;
+    a[10] := 11;
+    WriteLn(a[0] + a[1]);
+    WriteLn(a[10]);
+
+
+    { An expression as an index }
+    i := 10;
+    while (i < 21) do
+    begin
+        a[i] := 42;
+        i := i + 1;
+    end;
+
+    i := 0;
+    while (i < 11) do
+    begin
+        WriteLn(a[i+10]);
+        i := i + 1;
+    end;
+
+
+    { Pass an array to a function }
+    c[0] := "Hello from a function";
+    TestFunction(c);
+
+end;
